@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Модели в Django</title>
+</head>
+<body class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <p> <label>Измените имя</label><br>
+            <input type="text" name="first_name" value="{{author.first_name}}" />
+        </p>
+        <p> <label>Измените фамилию</label><br>
+            <input type="text" name="last_name" value="{{author.last_name}}" />
+        </p>
+        <p> <label>Измените дату рождения</label><br>
+            <input type="date" name="date_of_birth" value="{{author.date_of_birth}}" />
+        </p>
+        <p> <label>Измените дату смерти</label><br>
+            <input type="date" name="date_of_death" value="{{author.date_of_death}}" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>

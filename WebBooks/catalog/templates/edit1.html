@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+  <h3>Текущие сведения об авторе</h3>
+  <h4>{{author.first_name}} {{author.last_name}} ({{author.date_of_birth}} - {{author.date_of_death}})</h4>
+
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Изменить сведения об авторе книги</h3>
+        <p> <label>Измените имя</label><br>
+            <input type="text" name="first_name" value="{{author.first_name}}" />
+        </p>
+        <p> <label>Измените фамилию</label><br>
+            <input type="text" name="last_name" value="{{author.last_name}}" />
+        </p>
+        <p> <label>Измените дату рождения</label><br>
+            <input type="date"  name="date_of_birth"  value="{{author.date_of_birth}}"/>
+        </p>
+        <p> <label>Измените дату смерти</label><br>
+            <input type="date" name="date_of_death" value="{{author.date_of_death}}" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+
+{% endblock %}

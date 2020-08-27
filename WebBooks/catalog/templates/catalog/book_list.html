@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Список книг в БД</h1>
+    {% if book_list %}
+    <ul>
+      {% for book in book_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.genre}})
+        <a href="/book/update/{{book.id}}">Изменить</a> , <a href="/book/delete/{{book.id}}">Удалить</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>В базе данных нет книг</p>
+    {% endif %}       
+{% endblock %}

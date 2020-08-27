@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Мир книг</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Добавление статического CSS файла -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% block head %}
+     <img src="{% static 'images/logotip.jpg' %}" style="width:100px; height:100px;"  align="absmiddle">
+     <font size=7, color="blue">Сайт "Мир книг"</font>
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+      {% block sidebar %}
+      <ul class="sidebar-nav">
+          <li><a href="{% url 'index' %}">Главная страница</a></li>
+          <li><a href="{% url 'books' %}">Все книги</a></li>
+          <li><a href="{% url 'authors' %}">Все авторы</a></li>
+          <li><a href="{% url 'authors_add' %}">Редактировать авторов</a></li>
+          <li><a href="{% url 'book_create' %}">Добавить книгу</a></li>
+        {% if user.is_authenticated %}
+          <li>Пользователь: {{ user.get_username }}</li>
+          <li><a href="{% url 'my-borrowed' %}">Мои заказы</a></li>
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Выход</a></li>
+        {% else %}
+          <li><a href="{% url 'login'%}?next={{request.path}}">Вход</a></li>
+        {% endif %}
+      </ul>
+
+        {% if user.is_staff %}
+            <hr />
+            <ul class="sidebar-nav">
+            <li>Персонал</li>
+               {% if perms.catalog.can_mark_returned %}
+
+               {% endif %}
+             </ul>
+         {% endif %}
+
+      {% endblock %}
+
+
+      </div>
+      <div class="col-sm-10 ">
+      {% block content %}{% endblock %}
+
+        {% block pagination %}
+          {% if is_paginated %}
+              <div class="pagination">
+                  <span class="page-links">
+                      {% if page_obj.has_previous %}
+                          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                      {% endif %}
+                      <span class="page-current">
+                          Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                      </span>
+                      {% if page_obj.has_next %}
+                          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>
+                      {% endif %}
+                  </span>
+              </div>
+          {% endif %}
+        {% endblock %}
+
+      {% block footer %}
+         {% block copyright %}
+       <p>Copyright ООО "Люди и книги", 2020. Все права защищены</p>
+         {% endblock %}
+      {% endblock %}
+
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
