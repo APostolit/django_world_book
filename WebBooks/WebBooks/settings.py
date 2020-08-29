@@ -145,6 +145,7 @@ DATABASES['default'].update(db_from_env)
 # Абсолютный путь к каталогу, в котором collectstatic
 # будет собирать статические файлы для развертывания.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
 
 # Упрощенная обработка статическая файлов.
 # https://warehouse.python.org/project/whitenoise/
